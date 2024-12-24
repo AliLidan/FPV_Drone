@@ -1,0 +1,164 @@
+﻿<Page x:Class="FPV_Drone.Pages.user_drone"
+      xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+      xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+      xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
+      xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
+      xmlns:local="clr-namespace:FPV_Drone.Pages"
+      mc:Ignorable="d" 
+      d:DesignHeight="450" d:DesignWidth="800"
+      Title="user_drone">
+
+
+
+    <Page.Resources>
+        <Style TargetType="ToolTip">
+            <Setter Property="Background" Value="LightYellow"/>
+            <Setter Property="Foreground" Value="Black"/>
+            <Setter Property="FontSize" Value="14"/>
+            <Setter Property="Padding" Value="10"/>
+            <Setter Property="BorderBrush" Value="DarkGray"/>
+            <Setter Property="BorderThickness" Value="1"/>
+            <Setter Property="Template">
+                <Setter.Value>
+                    <ControlTemplate TargetType="ToolTip">
+                        <Border 
+                        Background="{TemplateBinding Background}" 
+                        BorderBrush="{TemplateBinding BorderBrush}" 
+                        BorderThickness="{TemplateBinding BorderThickness}" 
+                        CornerRadius="5">
+                            <ContentPresenter Margin="{TemplateBinding Padding}"/>
+                        </Border>
+                    </ControlTemplate>
+                </Setter.Value>
+            </Setter>
+        </Style>
+
+    </Page.Resources>
+
+    <Grid >
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition Width="155"></ColumnDefinition>
+            <ColumnDefinition Width="110*"></ColumnDefinition>
+            <ColumnDefinition Width="50*"></ColumnDefinition>
+        </Grid.ColumnDefinitions>
+
+        <Grid Grid.Column="1">
+            <Grid.RowDefinitions>
+                <RowDefinition Height="28"></RowDefinition>
+                <RowDefinition Height="28"></RowDefinition>
+                <RowDefinition Height="28"></RowDefinition>
+                <RowDefinition Height="28"></RowDefinition>
+                <RowDefinition Height="28"></RowDefinition>
+                <RowDefinition Height="28"></RowDefinition>
+                <RowDefinition Height="28"></RowDefinition>
+                <RowDefinition Height="28"></RowDefinition>
+                <RowDefinition Height="28"></RowDefinition>
+                <RowDefinition Height="57"></RowDefinition>
+                <RowDefinition Height="28"></RowDefinition>
+                <RowDefinition Height="28"></RowDefinition>
+                <RowDefinition Height="28"></RowDefinition>
+                <RowDefinition Height="28"></RowDefinition>
+                <RowDefinition Height="28"></RowDefinition>
+
+            </Grid.RowDefinitions>
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="16*"></ColumnDefinition>
+                <ColumnDefinition Width="195*"></ColumnDefinition>
+                <ColumnDefinition Width="262*"></ColumnDefinition>
+            </Grid.ColumnDefinitions>
+
+            <Label Content="Наименование модели" HorizontalAlignment="Right" Grid.Row="1" Grid.Column="1" Width="138"></Label>
+            <Label Content="Тип дрона" HorizontalAlignment="Right" Grid.Row="2" Grid.Column="1" Width="67" ></Label>
+            <Label Content="Время полетоа" HorizontalAlignment="Right" Grid.Row="3" Grid.Column="1" Width="93"></Label>
+            <Label Content="Тип контроллера" HorizontalAlignment="Right" Grid.Row="4" Grid.Column="1"  ></Label>
+            <Label Content="Мах нагрузка" HorizontalAlignment="Right" Grid.Row="5" Grid.Column="1" Width="84" ></Label>
+            <Label Content="Описание" HorizontalAlignment="Right" Grid.Row="6" Grid.Column="1" Width="63" ></Label>
+            <Label Content="Логотип" HorizontalAlignment="Right" Grid.Row="9" Grid.Column="1" Width="56" ></Label>
+
+
+            <TextBox x:Name="tb_name_model" Grid.Row="1" Grid.Column="2" Width="200" HorizontalAlignment="Left" MaxLength="34" TextChanged="InputField_TextChanged" />
+
+            <ComboBox x:Name="tb_type_drone" Grid.Row="2" Grid.Column="2" Width="200" HorizontalAlignment="Left" SelectionChanged="InputField_SelectionChanged">
+                <ComboBox.ItemTemplate>
+                    <DataTemplate>
+                        <TextBlock Text="{Binding Name}" MaxWidth="200" ToolTip="{Binding Tooltip}" Width="260" />
+                    </DataTemplate>
+                </ComboBox.ItemTemplate>
+            </ComboBox>
+
+
+            <TextBox x:Name="tb_time_flight" Grid.Row="3" Grid.Column="2" Width="200" HorizontalAlignment="Left" MaxLength="8" 
+        
+                        PreviewTextInput="TimeTextBox_PreviewTextInput_time" 
+                        TextChanged="TimeTextBox_TextChanged_time" />
+
+
+            <ComboBox x:Name="tb_type_control" Grid.Row="4" Grid.Column="2" Width="200" HorizontalAlignment="Left" SelectionChanged="InputField_SelectionChanged">
+                <ComboBox.ItemTemplate>
+                    <DataTemplate>
+                        <TextBlock Text="{Binding Name}" ToolTip="{Binding Tooltip}" Width="260" />
+                    </DataTemplate>
+                </ComboBox.ItemTemplate>
+            </ComboBox>
+
+
+            <TextBox x:Name="tb_max_payload" Grid.Row="5" Grid.Column="2" Width="200" HorizontalAlignment="Left" MaxLength="10" PreviewTextInput="NumberInputTextBox_PreviewTextInput" TextChanged="InputField_TextChanged" />
+            <TextBox x:Name="tb_describe" Grid.Row="6" Grid.Column="2" Width="200" HorizontalAlignment="Left" TextChanged="InputField_TextChanged" />
+
+
+
+            <DataGrid x:Name="grid_tb" Height="173"  VerticalAlignment="Top" Grid.Row="9" Grid.RowSpan="6" Grid.ColumnSpan="3"/>
+
+        </Grid>
+
+        <Grid Grid.Column="2" Margin="10,0,10,0">
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="*"></ColumnDefinition>
+            </Grid.ColumnDefinitions>
+            <Grid.RowDefinitions>
+                <RowDefinition Height="100*"></RowDefinition>
+                <RowDefinition Height="100"></RowDefinition>
+                <RowDefinition Height="100"></RowDefinition>
+            </Grid.RowDefinitions>
+
+            <Grid Grid.Row="0">
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="14*"></ColumnDefinition>
+                    <ColumnDefinition Width="47*"/>
+                </Grid.ColumnDefinitions>
+                <Grid.RowDefinitions>
+                    <RowDefinition Height="10*"></RowDefinition>
+                    <RowDefinition Height="100"></RowDefinition>
+                    <RowDefinition Height="10*"></RowDefinition>
+                    <RowDefinition Height="100"></RowDefinition>
+                </Grid.RowDefinitions>
+
+                <TextBlock x:Name="info_type_dron" TextAlignment="Center" TextWrapping="Wrap"  Grid.Row="0" Text="Тип дрона" VerticalAlignment="Top" Foreground="#FF31A8D0" FontSize="15" FontWeight="Bold" Grid.ColumnSpan="2"/>
+
+                <Border CornerRadius="10" Background="#FF99DBF1" Padding="5" Grid.Row="1" Grid.ColumnSpan="2">
+                    <ScrollViewer Grid.Row="1" VerticalScrollBarVisibility="Auto" Background="#FF99DBF1">
+                        <TextBlock x:Name="info_type_dron_1" TextWrapping="Wrap"   Text="**********" VerticalAlignment="Top"/>
+                    </ScrollViewer>
+                </Border>
+
+
+                <TextBlock x:Name="info_type_controller" TextAlignment="Center" TextWrapping="Wrap" Grid.Row="2" Text="Тип контроллера" VerticalAlignment="Center" Foreground="#FF31A8D0" FontWeight="Bold" FontSize="15" Grid.ColumnSpan="2" Margin="0,3,0,2" />
+
+
+                <Border CornerRadius="10" Background="#FF99DBF1" Padding="5" Grid.Row="3" Grid.ColumnSpan="2">
+                    <ScrollViewer Grid.Row="3" VerticalScrollBarVisibility="Auto" >
+                        <TextBlock x:Name="info_type_controller_1" TextWrapping="Wrap"  Grid.Row="3" Text="--------" VerticalAlignment="Top"/>
+                    </ScrollViewer>
+                </Border>
+
+
+            </Grid>
+
+            <Button x:Name="btnDelHistory" Content="Удалить" VerticalAlignment="Center" Background="#F9969E" IsEnabled="True" Grid.Row="1" Grid.Column="2" Height="50" Click="btnDelete_Click"/>
+            <Button x:Name="btnchange" Content="Изменить" VerticalAlignment="Top" Background="#FFB5F996"  IsEnabled="False"  Grid.Row="2" Grid.Column="2" Height="50" Click="btn_Update_Click_1"/>
+
+        </Grid>
+        <Image x:Name="x_image" HorizontalAlignment="Left" Height="135" Margin="10,10,0,0" VerticalAlignment="Top" Width="136" Source="/FPV_Drone;component/Images/drone_vehicle_transport_icon_208510.ico"/>
+    </Grid>
+
+</Page>

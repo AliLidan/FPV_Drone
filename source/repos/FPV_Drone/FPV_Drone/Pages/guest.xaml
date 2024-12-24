@@ -1,0 +1,20 @@
+﻿<Page x:Class="FPV_Drone.Pages.guest"
+      xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+      xmlns:gif="clr-namespace:WpfAnimatedGif;assembly=WpfAnimatedGif"
+      xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+      xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
+      xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
+      xmlns:wpfGif="clr-namespace:WpfAnimatedGif;assembly=WpfAnimatedGif"
+      xmlns:local="clr-namespace:FPV_Drone.Pages"
+      mc:Ignorable="d" 
+      d:DesignHeight="450" d:DesignWidth="800"
+      Title="guest">
+
+    <Grid>
+        <DataGrid x:Name="dg_guest" HorizontalAlignment="Left" Height="182" Margin="441,67,0,0" VerticalAlignment="Top" Width="334" />
+        <TextBlock x:Name="tb_guest" HorizontalAlignment="Left" Margin="269,10,0,0" TextWrapping="Wrap" Text="Добро пожаловать Гость!" VerticalAlignment="Top" FontSize="22"/>
+        <Calendar HorizontalAlignment="Left" Margin="434,254,0,0" VerticalAlignment="Top" Width="341"/>
+        <Image HorizontalAlignment="Left" Height="192" Margin="90,57,0,0" VerticalAlignment="Top" Width="284" Source="/FPV_Drone;component/Images/170-gifok-dlja-prezentacij-8ebb6c2.gif"/>
+        <Image HorizontalAlignment="Left" Height="100" Margin="55,254,0,0" VerticalAlignment="Top" Width="330" Source="/FPV_Drone;component/Images/91429226_45553758_40737118_ch.gif" Stretch="Fill"/>
+    </Grid>
+</Page>

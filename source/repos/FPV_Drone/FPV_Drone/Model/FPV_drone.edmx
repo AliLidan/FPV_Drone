@@ -1,0 +1,666 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<edmx:Edmx Version="3.0" xmlns:edmx="http://schemas.microsoft.com/ado/2009/11/edmx">
+  <!-- EF Runtime content -->
+  <edmx:Runtime>
+    <!-- SSDL content -->
+    <edmx:StorageModels>
+      <Schema Namespace="Хранилище FPV_dronModel" Provider="System.Data.SqlClient" ProviderManifestToken="2012" Alias="Self" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
+        <EntityType Name="Acsel">
+          <Key>
+            <PropertyRef Name="id_acsel" />
+          </Key>
+          <Property Name="id_acsel" Type="bigint" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="id_flight" Type="bigint" Nullable="false" />
+          <Property Name="time_start" Type="datetime" />
+          <Property Name="x" Type="float" />
+          <Property Name="y" Type="float" />
+          <Property Name="z" Type="float" />
+        </EntityType>
+        <EntityType Name="Control_Type">
+          <Key>
+            <PropertyRef Name="id_cnotrol_type" />
+          </Key>
+          <Property Name="id_cnotrol_type" Type="bigint" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="name" Type="nvarchar" MaxLength="25" Nullable="false" />
+          <Property Name="descript_type" Type="nvarchar" MaxLength="260" Nullable="true" />
+        </EntityType>
+        <EntityType Name="Drone">
+          <Key>
+            <PropertyRef Name="id_drone" />
+          </Key>
+          <Property Name="id_drone" Type="bigint" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="name_model" Type="nvarchar" MaxLength="35" Nullable="false" />
+          <Property Name="id_type_drone" Type="bigint" Nullable="false" />
+          <Property Name="time_flight" Type="time" Precision="7" />
+          <Property Name="id_type_control" Type="bigint" Nullable="false" />
+          <Property Name="max_payload" Type="int" />
+          <Property Name="describe" Type="nvarchar" MaxLength="50" />
+        </EntityType>
+        <EntityType Name="Drone_User">
+          <Key>
+            <PropertyRef Name="id_drone_user" />
+          </Key>
+          <Property Name="id_drone_user" Type="bigint" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="id_user" Type="bigint" Nullable="false" />
+          <Property Name="id_drone" Type="bigint" Nullable="false" />
+        </EntityType>
+        <EntityType Name="Flight">
+          <Key>
+            <PropertyRef Name="id_flight" />
+          </Key>
+          <Property Name="id_flight" Type="bigint" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="id_drone" Type="bigint" Nullable="false" />
+          <Property Name="id_user" Type="bigint" Nullable="false" />
+          <Property Name="time_all" Type="time" Precision="7" />
+        </EntityType>
+        <EntityType Name="Login">
+          <Key>
+            <PropertyRef Name="id_login" />
+          </Key>
+          <Property Name="id_login" Type="bigint" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="login" Type="nvarchar" MaxLength="15" Nullable="false" />
+          <Property Name="password" Type="nvarchar" MaxLength="20" Nullable="false" />
+        </EntityType>
+        <EntityType Name="Role">
+          <Key>
+            <PropertyRef Name="id_role" />
+          </Key>
+          <Property Name="id_role" Type="bigint" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="name" Type="nvarchar" MaxLength="25" Nullable="false" />
+        </EntityType>
+        <EntityType Name="sysdiagrams">
+          <Key>
+            <PropertyRef Name="diagram_id" />
+          </Key>
+          <Property Name="name" Type="nvarchar" MaxLength="128" Nullable="false" />
+          <Property Name="principal_id" Type="int" Nullable="false" />
+          <Property Name="diagram_id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="version" Type="int" />
+          <Property Name="definition" Type="varbinary(max)" />
+        </EntityType>
+        <EntityType Name="Type_Drone">
+          <Key>
+            <PropertyRef Name="id_type_drone" />
+          </Key>
+          <Property Name="id_type_drone" Type="bigint" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="name" Type="nvarchar" MaxLength="45" Nullable="false" />
+          <Property Name="descript_type" Type="nvarchar" MaxLength="260" Nullable="true" />
+        </EntityType>
+        <EntityType Name="Users">
+          <Key>
+            <PropertyRef Name="id_user" />
+          </Key>
+          <Property Name="id_user" Type="bigint" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="name" Type="nvarchar" MaxLength="20" Nullable="false" />
+          <Property Name="surname" Type="nvarchar" MaxLength="20" Nullable="false" />
+          <Property Name="bithday" Type="date" Nullable="false" />
+          <Property Name="address" Type="nvarchar" MaxLength="50" />
+          <Property Name="city" Type="nvarchar" MaxLength="50" />
+          <Property Name="id_login" Type="bigint" Nullable="false" />
+          <Property Name="id_role" Type="bigint" Nullable="false" />
+        </EntityType>
+        <Association Name="FK_Acsel_Flight">
+          <End Role="Flight" Type="Self.Flight" Multiplicity="1" />
+          <End Role="Acsel" Type="Self.Acsel" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Flight">
+              <PropertyRef Name="id_flight" />
+            </Principal>
+            <Dependent Role="Acsel">
+              <PropertyRef Name="id_flight" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Drone_Control_Type">
+          <End Role="Control_Type" Type="Self.Control_Type" Multiplicity="1" />
+          <End Role="Drone" Type="Self.Drone" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Control_Type">
+              <PropertyRef Name="id_cnotrol_type" />
+            </Principal>
+            <Dependent Role="Drone">
+              <PropertyRef Name="id_type_control" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Drone_Type_Drone">
+          <End Role="Type_Drone" Type="Self.Type_Drone" Multiplicity="1" />
+          <End Role="Drone" Type="Self.Drone" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Type_Drone">
+              <PropertyRef Name="id_type_drone" />
+            </Principal>
+            <Dependent Role="Drone">
+              <PropertyRef Name="id_type_drone" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Drone_User_Drone">
+          <End Role="Drone" Type="Self.Drone" Multiplicity="1" />
+          <End Role="Drone_User" Type="Self.Drone_User" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Drone">
+              <PropertyRef Name="id_drone" />
+            </Principal>
+            <Dependent Role="Drone_User">
+              <PropertyRef Name="id_drone" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Drone_User_Users">
+          <End Role="Users" Type="Self.Users" Multiplicity="1" />
+          <End Role="Drone_User" Type="Self.Drone_User" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Users">
+              <PropertyRef Name="id_user" />
+            </Principal>
+            <Dependent Role="Drone_User">
+              <PropertyRef Name="id_user" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Flight_Drone">
+          <End Role="Drone" Type="Self.Drone" Multiplicity="1" />
+          <End Role="Flight" Type="Self.Flight" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Drone">
+              <PropertyRef Name="id_drone" />
+            </Principal>
+            <Dependent Role="Flight">
+              <PropertyRef Name="id_drone" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Flight_Users">
+          <End Role="Users" Type="Self.Users" Multiplicity="1" />
+          <End Role="Flight" Type="Self.Flight" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Users">
+              <PropertyRef Name="id_user" />
+            </Principal>
+            <Dependent Role="Flight">
+              <PropertyRef Name="id_user" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Users_Login">
+          <End Role="Login" Type="Self.Login" Multiplicity="1" />
+          <End Role="Users" Type="Self.Users" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Login">
+              <PropertyRef Name="id_login" />
+            </Principal>
+            <Dependent Role="Users">
+              <PropertyRef Name="id_login" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Users_Role">
+          <End Role="Role" Type="Self.Role" Multiplicity="1" />
+          <End Role="Users" Type="Self.Users" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Role">
+              <PropertyRef Name="id_role" />
+            </Principal>
+            <Dependent Role="Users">
+              <PropertyRef Name="id_role" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <EntityContainer Name="Хранилище FPV_dronModelContainer">
+          <EntitySet Name="Acsel" EntityType="Self.Acsel" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="Control_Type" EntityType="Self.Control_Type" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="Drone" EntityType="Self.Drone" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="Drone_User" EntityType="Self.Drone_User" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="Flight" EntityType="Self.Flight" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="Login" EntityType="Self.Login" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="Role" EntityType="Self.Role" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="sysdiagrams" EntityType="Self.sysdiagrams" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="Type_Drone" EntityType="Self.Type_Drone" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="Users" EntityType="Self.Users" Schema="dbo" store:Type="Tables" />
+          <AssociationSet Name="FK_Acsel_Flight" Association="Self.FK_Acsel_Flight">
+            <End Role="Flight" EntitySet="Flight" />
+            <End Role="Acsel" EntitySet="Acsel" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Drone_Control_Type" Association="Self.FK_Drone_Control_Type">
+            <End Role="Control_Type" EntitySet="Control_Type" />
+            <End Role="Drone" EntitySet="Drone" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Drone_Type_Drone" Association="Self.FK_Drone_Type_Drone">
+            <End Role="Type_Drone" EntitySet="Type_Drone" />
+            <End Role="Drone" EntitySet="Drone" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Drone_User_Drone" Association="Self.FK_Drone_User_Drone">
+            <End Role="Drone" EntitySet="Drone" />
+            <End Role="Drone_User" EntitySet="Drone_User" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Drone_User_Users" Association="Self.FK_Drone_User_Users">
+            <End Role="Users" EntitySet="Users" />
+            <End Role="Drone_User" EntitySet="Drone_User" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Flight_Drone" Association="Self.FK_Flight_Drone">
+            <End Role="Drone" EntitySet="Drone" />
+            <End Role="Flight" EntitySet="Flight" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Flight_Users" Association="Self.FK_Flight_Users">
+            <End Role="Users" EntitySet="Users" />
+            <End Role="Flight" EntitySet="Flight" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Users_Login" Association="Self.FK_Users_Login">
+            <End Role="Login" EntitySet="Login" />
+            <End Role="Users" EntitySet="Users" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Users_Role" Association="Self.FK_Users_Role">
+            <End Role="Role" EntitySet="Role" />
+            <End Role="Users" EntitySet="Users" />
+          </AssociationSet>
+        </EntityContainer>
+      </Schema>
+    </edmx:StorageModels>
+    <!-- CSDL content -->
+    <edmx:ConceptualModels>
+      <Schema Namespace="FPV_dronModel" Alias="Self" annotation:UseStrongSpatialTypes="false" xmlns:annotation="http://schemas.microsoft.com/ado/2009/02/edm/annotation" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm">
+        <EntityType Name="Acsel">
+          <Key>
+            <PropertyRef Name="id_acsel" />
+          </Key>
+          <Property Name="id_acsel" Type="Int64" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="id_flight" Type="Int64" Nullable="false" />
+          <Property Name="time_start" Type="DateTime" Precision="3" />
+          <Property Name="x" Type="Double" />
+          <Property Name="y" Type="Double" />
+          <Property Name="z" Type="Double" />
+          <NavigationProperty Name="Flight" Relationship="Self.FK_Acsel_Flight" FromRole="Acsel" ToRole="Flight" />
+        </EntityType>
+        <EntityType Name="Control_Type">
+          <Key>
+            <PropertyRef Name="id_cnotrol_type" />
+          </Key>
+          <Property Name="id_cnotrol_type" Type="Int64" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="name" Type="String" MaxLength="25" FixedLength="false" Unicode="true" Nullable="false" />
+          <Property Name="descript_type" Type="String" MaxLength="260" FixedLength="false" Unicode="true" Nullable="true" />
+          <NavigationProperty Name="Drone" Relationship="Self.FK_Drone_Control_Type" FromRole="Control_Type" ToRole="Drone" />
+        </EntityType>
+        <EntityType Name="Drone">
+          <Key>
+            <PropertyRef Name="id_drone" />
+          </Key>
+          <Property Name="id_drone" Type="Int64" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="name_model" Type="String" MaxLength="35" FixedLength="false" Unicode="true" Nullable="false" />
+          <Property Name="id_type_drone" Type="Int64" Nullable="false" />
+          <Property Name="time_flight" Type="Time" Precision="7" />
+          <Property Name="id_type_control" Type="Int64" Nullable="false" />
+          <Property Name="max_payload" Type="Int32" />
+          <Property Name="describe" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+          <NavigationProperty Name="Control_Type" Relationship="Self.FK_Drone_Control_Type" FromRole="Drone" ToRole="Control_Type" />
+          <NavigationProperty Name="Type_Drone" Relationship="Self.FK_Drone_Type_Drone" FromRole="Drone" ToRole="Type_Drone" />
+          <NavigationProperty Name="Drone_User" Relationship="Self.FK_Drone_User_Drone" FromRole="Drone" ToRole="Drone_User" />
+          <NavigationProperty Name="Flight" Relationship="Self.FK_Flight_Drone" FromRole="Drone" ToRole="Flight" />
+        </EntityType>
+        <EntityType Name="Drone_User">
+          <Key>
+            <PropertyRef Name="id_drone_user" />
+          </Key>
+          <Property Name="id_drone_user" Type="Int64" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="id_user" Type="Int64" Nullable="false" />
+          <Property Name="id_drone" Type="Int64" Nullable="false" />
+          <NavigationProperty Name="Drone" Relationship="Self.FK_Drone_User_Drone" FromRole="Drone_User" ToRole="Drone" />
+          <NavigationProperty Name="Users" Relationship="Self.FK_Drone_User_Users" FromRole="Drone_User" ToRole="Users" />
+        </EntityType>
+        <EntityType Name="Flight">
+          <Key>
+            <PropertyRef Name="id_flight" />
+          </Key>
+          <Property Name="id_flight" Type="Int64" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="id_drone" Type="Int64" Nullable="false" />
+          <Property Name="id_user" Type="Int64" Nullable="false" />
+          <Property Name="time_all" Type="Time" Precision="7" />
+          <NavigationProperty Name="Acsel" Relationship="Self.FK_Acsel_Flight" FromRole="Flight" ToRole="Acsel" />
+          <NavigationProperty Name="Drone" Relationship="Self.FK_Flight_Drone" FromRole="Flight" ToRole="Drone" />
+          <NavigationProperty Name="Users" Relationship="Self.FK_Flight_Users" FromRole="Flight" ToRole="Users" />
+        </EntityType>
+        <EntityType Name="Login">
+          <Key>
+            <PropertyRef Name="id_login" />
+          </Key>
+          <Property Name="id_login" Type="Int64" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="login1" Type="String" MaxLength="15" FixedLength="false" Unicode="true" Nullable="false" />
+          <Property Name="password" Type="String" MaxLength="20" FixedLength="false" Unicode="true" Nullable="false" />
+          <NavigationProperty Name="Users" Relationship="Self.FK_Users_Login" FromRole="Login" ToRole="Users" />
+        </EntityType>
+        <EntityType Name="Role">
+          <Key>
+            <PropertyRef Name="id_role" />
+          </Key>
+          <Property Name="id_role" Type="Int64" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="name" Type="String" MaxLength="25" FixedLength="false" Unicode="true" Nullable="false" />
+          <NavigationProperty Name="Users" Relationship="Self.FK_Users_Role" FromRole="Role" ToRole="Users" />
+        </EntityType>
+        <EntityType Name="sysdiagrams">
+          <Key>
+            <PropertyRef Name="diagram_id" />
+          </Key>
+          <Property Name="name" Type="String" MaxLength="128" FixedLength="false" Unicode="true" Nullable="false" />
+          <Property Name="principal_id" Type="Int32" Nullable="false" />
+          <Property Name="diagram_id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="version" Type="Int32" />
+          <Property Name="definition" Type="Binary" MaxLength="Max" FixedLength="false" />
+        </EntityType>
+        <EntityType Name="Type_Drone">
+          <Key>
+            <PropertyRef Name="id_type_drone" />
+          </Key>
+          <Property Name="id_type_drone" Type="Int64" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="name" Type="String" MaxLength="45" FixedLength="false" Unicode="true" Nullable="false" />
+          <Property Name="descript_type" Type="String" MaxLength="260" FixedLength="false" Unicode="true" Nullable="true" />
+          <NavigationProperty Name="Drone" Relationship="Self.FK_Drone_Type_Drone" FromRole="Type_Drone" ToRole="Drone" />
+        </EntityType>
+        <EntityType Name="Users">
+          <Key>
+            <PropertyRef Name="id_user" />
+          </Key>
+          <Property Name="id_user" Type="Int64" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="name" Type="String" MaxLength="20" FixedLength="false" Unicode="true" Nullable="false" />
+          <Property Name="surname" Type="String" MaxLength="20" FixedLength="false" Unicode="true" Nullable="false" />
+          <Property Name="bithday" Type="DateTime" Nullable="false" Precision="0" />
+          <Property Name="address" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="city" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="id_login" Type="Int64" Nullable="false" />
+          <Property Name="id_role" Type="Int64" Nullable="false" />
+          <NavigationProperty Name="Drone_User" Relationship="Self.FK_Drone_User_Users" FromRole="Users" ToRole="Drone_User" />
+          <NavigationProperty Name="Flight" Relationship="Self.FK_Flight_Users" FromRole="Users" ToRole="Flight" />
+          <NavigationProperty Name="Login" Relationship="Self.FK_Users_Login" FromRole="Users" ToRole="Login" />
+          <NavigationProperty Name="Role" Relationship="Self.FK_Users_Role" FromRole="Users" ToRole="Role" />
+        </EntityType>
+        <Association Name="FK_Acsel_Flight">
+          <End Role="Flight" Type="Self.Flight" Multiplicity="1" />
+          <End Role="Acsel" Type="Self.Acsel" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Flight">
+              <PropertyRef Name="id_flight" />
+            </Principal>
+            <Dependent Role="Acsel">
+              <PropertyRef Name="id_flight" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Drone_Control_Type">
+          <End Role="Control_Type" Type="Self.Control_Type" Multiplicity="1" />
+          <End Role="Drone" Type="Self.Drone" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Control_Type">
+              <PropertyRef Name="id_cnotrol_type" />
+            </Principal>
+            <Dependent Role="Drone">
+              <PropertyRef Name="id_type_control" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Drone_Type_Drone">
+          <End Role="Type_Drone" Type="Self.Type_Drone" Multiplicity="1" />
+          <End Role="Drone" Type="Self.Drone" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Type_Drone">
+              <PropertyRef Name="id_type_drone" />
+            </Principal>
+            <Dependent Role="Drone">
+              <PropertyRef Name="id_type_drone" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Drone_User_Drone">
+          <End Role="Drone" Type="Self.Drone" Multiplicity="1" />
+          <End Role="Drone_User" Type="Self.Drone_User" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Drone">
+              <PropertyRef Name="id_drone" />
+            </Principal>
+            <Dependent Role="Drone_User">
+              <PropertyRef Name="id_drone" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Flight_Drone">
+          <End Role="Drone" Type="Self.Drone" Multiplicity="1" />
+          <End Role="Flight" Type="Self.Flight" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Drone">
+              <PropertyRef Name="id_drone" />
+            </Principal>
+            <Dependent Role="Flight">
+              <PropertyRef Name="id_drone" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Drone_User_Users">
+          <End Role="Users" Type="Self.Users" Multiplicity="1" />
+          <End Role="Drone_User" Type="Self.Drone_User" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Users">
+              <PropertyRef Name="id_user" />
+            </Principal>
+            <Dependent Role="Drone_User">
+              <PropertyRef Name="id_user" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Flight_Users">
+          <End Role="Users" Type="Self.Users" Multiplicity="1" />
+          <End Role="Flight" Type="Self.Flight" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Users">
+              <PropertyRef Name="id_user" />
+            </Principal>
+            <Dependent Role="Flight">
+              <PropertyRef Name="id_user" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Users_Login">
+          <End Role="Login" Type="Self.Login" Multiplicity="1" />
+          <End Role="Users" Type="Self.Users" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Login">
+              <PropertyRef Name="id_login" />
+            </Principal>
+            <Dependent Role="Users">
+              <PropertyRef Name="id_login" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Users_Role">
+          <End Role="Role" Type="Self.Role" Multiplicity="1" />
+          <End Role="Users" Type="Self.Users" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Role">
+              <PropertyRef Name="id_role" />
+            </Principal>
+            <Dependent Role="Users">
+              <PropertyRef Name="id_role" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <EntityContainer Name="FPV_dronEntities1" annotation:LazyLoadingEnabled="true">
+          <EntitySet Name="Acsel" EntityType="Self.Acsel" />
+          <EntitySet Name="Control_Type" EntityType="Self.Control_Type" />
+          <EntitySet Name="Drone" EntityType="Self.Drone" />
+          <EntitySet Name="Drone_User" EntityType="Self.Drone_User" />
+          <EntitySet Name="Flight" EntityType="Self.Flight" />
+          <EntitySet Name="Login" EntityType="Self.Login" />
+          <EntitySet Name="Role" EntityType="Self.Role" />
+          <EntitySet Name="sysdiagrams" EntityType="Self.sysdiagrams" />
+          <EntitySet Name="Type_Drone" EntityType="Self.Type_Drone" />
+          <EntitySet Name="Users" EntityType="Self.Users" />
+          <AssociationSet Name="FK_Acsel_Flight" Association="Self.FK_Acsel_Flight">
+            <End Role="Flight" EntitySet="Flight" />
+            <End Role="Acsel" EntitySet="Acsel" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Drone_Control_Type" Association="Self.FK_Drone_Control_Type">
+            <End Role="Control_Type" EntitySet="Control_Type" />
+            <End Role="Drone" EntitySet="Drone" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Drone_Type_Drone" Association="Self.FK_Drone_Type_Drone">
+            <End Role="Type_Drone" EntitySet="Type_Drone" />
+            <End Role="Drone" EntitySet="Drone" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Drone_User_Drone" Association="Self.FK_Drone_User_Drone">
+            <End Role="Drone" EntitySet="Drone" />
+            <End Role="Drone_User" EntitySet="Drone_User" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Flight_Drone" Association="Self.FK_Flight_Drone">
+            <End Role="Drone" EntitySet="Drone" />
+            <End Role="Flight" EntitySet="Flight" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Drone_User_Users" Association="Self.FK_Drone_User_Users">
+            <End Role="Users" EntitySet="Users" />
+            <End Role="Drone_User" EntitySet="Drone_User" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Flight_Users" Association="Self.FK_Flight_Users">
+            <End Role="Users" EntitySet="Users" />
+            <End Role="Flight" EntitySet="Flight" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Users_Login" Association="Self.FK_Users_Login">
+            <End Role="Login" EntitySet="Login" />
+            <End Role="Users" EntitySet="Users" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Users_Role" Association="Self.FK_Users_Role">
+            <End Role="Role" EntitySet="Role" />
+            <End Role="Users" EntitySet="Users" />
+          </AssociationSet>
+        </EntityContainer>
+      </Schema>
+    </edmx:ConceptualModels>
+    <!-- C-S mapping content -->
+    <edmx:Mappings>
+      <Mapping Space="C-S" xmlns="http://schemas.microsoft.com/ado/2009/11/mapping/cs">
+        <EntityContainerMapping StorageEntityContainer="Хранилище FPV_dronModelContainer" CdmEntityContainer="FPV_dronEntities1">
+          <EntitySetMapping Name="Acsel">
+            <EntityTypeMapping TypeName="FPV_dronModel.Acsel">
+              <MappingFragment StoreEntitySet="Acsel">
+                <ScalarProperty Name="id_acsel" ColumnName="id_acsel" />
+                <ScalarProperty Name="id_flight" ColumnName="id_flight" />
+                <ScalarProperty Name="time_start" ColumnName="time_start" />
+                <ScalarProperty Name="x" ColumnName="x" />
+                <ScalarProperty Name="y" ColumnName="y" />
+                <ScalarProperty Name="z" ColumnName="z" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Control_Type">
+            <EntityTypeMapping TypeName="FPV_dronModel.Control_Type">
+              <MappingFragment StoreEntitySet="Control_Type">
+                <ScalarProperty Name="id_cnotrol_type" ColumnName="id_cnotrol_type" />
+                <ScalarProperty Name="name" ColumnName="name" />
+                <ScalarProperty Name="descript_type" ColumnName="descript_type" />
+                
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Drone">
+            <EntityTypeMapping TypeName="FPV_dronModel.Drone">
+              <MappingFragment StoreEntitySet="Drone">
+                <ScalarProperty Name="id_drone" ColumnName="id_drone" />
+                <ScalarProperty Name="name_model" ColumnName="name_model" />
+                <ScalarProperty Name="id_type_drone" ColumnName="id_type_drone" />
+                <ScalarProperty Name="time_flight" ColumnName="time_flight" />
+                <ScalarProperty Name="id_type_control" ColumnName="id_type_control" />
+                <ScalarProperty Name="max_payload" ColumnName="max_payload" />
+                <ScalarProperty Name="describe" ColumnName="describe" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Drone_User">
+            <EntityTypeMapping TypeName="FPV_dronModel.Drone_User">
+              <MappingFragment StoreEntitySet="Drone_User">
+                <ScalarProperty Name="id_drone_user" ColumnName="id_drone_user" />
+                <ScalarProperty Name="id_user" ColumnName="id_user" />
+                <ScalarProperty Name="id_drone" ColumnName="id_drone" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Flight">
+            <EntityTypeMapping TypeName="FPV_dronModel.Flight">
+              <MappingFragment StoreEntitySet="Flight">
+                <ScalarProperty Name="id_flight" ColumnName="id_flight" />
+                <ScalarProperty Name="id_drone" ColumnName="id_drone" />
+                <ScalarProperty Name="id_user" ColumnName="id_user" />
+                <ScalarProperty Name="time_all" ColumnName="time_all" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Login">
+            <EntityTypeMapping TypeName="FPV_dronModel.Login">
+              <MappingFragment StoreEntitySet="Login">
+                <ScalarProperty Name="id_login" ColumnName="id_login" />
+                <ScalarProperty Name="login1" ColumnName="login" />
+                <ScalarProperty Name="password" ColumnName="password" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Role">
+            <EntityTypeMapping TypeName="FPV_dronModel.Role">
+              <MappingFragment StoreEntitySet="Role">
+                <ScalarProperty Name="id_role" ColumnName="id_role" />
+                <ScalarProperty Name="name" ColumnName="name" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="sysdiagrams">
+            <EntityTypeMapping TypeName="FPV_dronModel.sysdiagrams">
+              <MappingFragment StoreEntitySet="sysdiagrams">
+                <ScalarProperty Name="name" ColumnName="name" />
+                <ScalarProperty Name="principal_id" ColumnName="principal_id" />
+                <ScalarProperty Name="diagram_id" ColumnName="diagram_id" />
+                <ScalarProperty Name="version" ColumnName="version" />
+                <ScalarProperty Name="definition" ColumnName="definition" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Type_Drone">
+            <EntityTypeMapping TypeName="FPV_dronModel.Type_Drone">
+              <MappingFragment StoreEntitySet="Type_Drone">
+                <ScalarProperty Name="id_type_drone" ColumnName="id_type_drone" />
+                <ScalarProperty Name="name" ColumnName="name" />
+                <ScalarProperty Name="descript_type" ColumnName="descript_type" />
+
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Users">
+            <EntityTypeMapping TypeName="FPV_dronModel.Users">
+              <MappingFragment StoreEntitySet="Users">
+                <ScalarProperty Name="id_user" ColumnName="id_user" />
+                <ScalarProperty Name="name" ColumnName="name" />
+                <ScalarProperty Name="surname" ColumnName="surname" />
+                <ScalarProperty Name="bithday" ColumnName="bithday" />
+                <ScalarProperty Name="address" ColumnName="address" />
+                <ScalarProperty Name="city" ColumnName="city" />
+                <ScalarProperty Name="id_login" ColumnName="id_login" />
+                <ScalarProperty Name="id_role" ColumnName="id_role" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+        </EntityContainerMapping>
+      </Mapping>
+    </edmx:Mappings>
+  </edmx:Runtime>
+  <!-- EF Designer content (DO NOT EDIT MANUALLY BELOW HERE) -->
+  <Designer xmlns="http://schemas.microsoft.com/ado/2009/11/edmx">
+    <Connection>
+      <DesignerInfoPropertySet>
+        <DesignerProperty Name="MetadataArtifactProcessing" Value="EmbedInOutputAssembly" />
+      </DesignerInfoPropertySet>
+    </Connection>
+    <Options>
+      <DesignerInfoPropertySet>
+        <DesignerProperty Name="ValidateOnBuild" Value="true" />
+        <DesignerProperty Name="EnablePluralization" Value="false" />
+        <DesignerProperty Name="IncludeForeignKeysInModel" Value="true" />
+        <DesignerProperty Name="UseLegacyProvider" Value="false" />
+        <DesignerProperty Name="CodeGenerationStrategy" Value="Нет" />
+      </DesignerInfoPropertySet>
+    </Options>
+    <!-- Diagram content (shape and connector positions) -->
+    <Diagrams></Diagrams>
+  </Designer>
+</edmx:Edmx>

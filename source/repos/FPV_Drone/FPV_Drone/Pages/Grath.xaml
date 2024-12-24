@@ -1,0 +1,61 @@
+﻿<Window x:Class="FPV_Drone.Pages.Grath"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:charts="clr-namespace:LiveCharts.Wpf;assembly=LiveCharts.Wpf"
+        xmlns:local="clr-namespace:FPV_Drone.Pages"
+        mc:Ignorable="d"
+         Icon="C:\Users\User\source\repos\FPV_Drone\FPV_Drone\Images\drone_vehicle_transport_icon_208510.ico"
+        Title="График полетов" Height="648.1" Width="800"  MinHeight="648.1" MinWidth="800">
+    
+    
+    <Grid Margin="5,5,5,5">
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition Width="211*"/>
+            <ColumnDefinition Width="581*"/>
+        </Grid.ColumnDefinitions>
+        <!-- <ListBox x:Name="RatingListBox" Margin="0,28,591,213" Background="Pink" />
+        <charts:PieChart Name="pieChart" Margin="206,0,0,10" />
+        <TextBlock HorizontalAlignment="Left" Margin="43,7,0,0" TextWrapping="Wrap" Text="Рейтинги полетов:" VerticalAlignment="Top"/>
+        <DataGrid HorizontalAlignment="Left" Height="208" Margin="0,211,0,0" VerticalAlignment="Top" Width="201"/>-->
+        <Grid.RowDefinitions>
+            <RowDefinition Height="20*"/>
+            <RowDefinition Height="200*"/>
+            <RowDefinition Height="25*"/>
+            <RowDefinition Height="25*"/>
+            <RowDefinition Height="30*"/>
+            <RowDefinition Height="30*"/>
+            <RowDefinition Height="20*"/>
+            <RowDefinition Height="25*"/>
+            <RowDefinition Height="30*"/>
+            <RowDefinition Height="200*"/>
+        </Grid.RowDefinitions>
+
+
+        <ListBox Grid.Column="0" Grid.Row="1" x:Name="RatingListBox"  Background="#FF31A8D0"  SelectionChanged="RatingListBox_SelectionChanged"/>
+
+        <charts:PieChart Name="pieChart" Grid.Column="1" Grid.RowSpan="9" 
+                         DataClick="PieChart_DataClick" Grid.ColumnSpan="2"
+                         LegendLocation="Right"/>
+        
+        <TextBlock  Grid.Column="0" Grid.Row="0"  Text="Рейтинги полетов:" HorizontalAlignment="Center" VerticalAlignment="Center"/>
+
+        <DataGrid Grid.Column="0" Grid.Row="9"  x:Name="FlightsDataGrid" Height="144" VerticalAlignment="Top" Grid.ColumnSpan="2"/>
+
+        <ComboBox Grid.Column="0" Grid.Row="5" VerticalAlignment="Top" SelectionChanged="CBSortBy_SelectionChanged" Height="22">
+            <ComboBoxItem Content="Без сортировки" />
+            <ComboBoxItem Content="По возрастанию" />
+            <ComboBoxItem Content="По убыванию" />
+        </ComboBox>
+
+        <DatePicker Grid.Column="0" Grid.Row="7"   x:Name="data_t" VerticalAlignment="Top" RenderTransformOrigin="0.72,0" SelectedDateChanged="New_data_open" Height="24"/>
+        <CheckBox Grid.Column="0" Grid.Row="8"      x:Name="nerly_t" Content="Недавние полеты"  VerticalAlignment="Center" RenderTransformOrigin="0.263,-0.2"  Checked="CheckBox_Checked" Unchecked="CheckBox_Unchecked"/>
+        <TextBox  Grid.Column="0" Grid.Row="3"      x:Name="tb_search" Height="23" TextWrapping="Wrap"  VerticalAlignment="Top" TextChanged="TextBox_TextChanged_search" />
+        <TextBlock Grid.Column="0" Grid.Row="4"     TextWrapping="Wrap" Text="Сортировка"              HorizontalAlignment="Left" VerticalAlignment="Center" Height="16"/>
+        <TextBlock Grid.Column="0" Grid.Row="6"     TextWrapping="Wrap" Text="Поиск по дате"           HorizontalAlignment="Left" VerticalAlignment="Center" Height="16"/>
+        <TextBlock Grid.Column="0" Grid.Row="2"     TextWrapping="Wrap" Text="Поиск"                    HorizontalAlignment="Left" VerticalAlignment="Center" Height="16"/>
+
+    </Grid>
+  
+</Window>
