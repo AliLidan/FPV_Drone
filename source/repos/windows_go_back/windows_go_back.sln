@@ -1,0 +1,25 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 12.00
+# Visual Studio Version 16
+VisualStudioVersion = 16.0.29709.97
+MinimumVisualStudioVersion = 10.0.40219.1
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "windows_go_back", "windows_go_back\windows_go_back.csproj", "{F62A3760-344D-4C6A-A702-F305E9DC4C8E}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Release|Any CPU = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{F62A3760-344D-4C6A-A702-F305E9DC4C8E}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{F62A3760-344D-4C6A-A702-F305E9DC4C8E}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{F62A3760-344D-4C6A-A702-F305E9DC4C8E}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{F62A3760-344D-4C6A-A702-F305E9DC4C8E}.Release|Any CPU.Build.0 = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(ExtensibilityGlobals) = postSolution
+		SolutionGuid = {24571EB1-18FF-47D6-A825-1A04DF2B6154}
+	EndGlobalSection
+EndGlobal
